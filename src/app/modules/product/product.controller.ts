@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
-import { createProductIntoDB, getAllProductsFromDB } from './product.service';
+import {
+  createProductIntoDB,
+  getAllProductsFromDB,
+  getSpecificProductFromDB,
+} from './product.service';
 import productValidationSchema from './product.validation';
 import { IProduct } from './product.interface';
 
@@ -39,7 +43,7 @@ const getAllProducts = async (req: Request, res: Response) => {
 
     res.status(201).json({
       success: true,
-      message: 'Product saved to database successfully',
+      message: 'Get all products from database successfully',
       data: result,
     });
   } catch (error) {
@@ -51,4 +55,23 @@ const getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
-export { createProduct, getAllProducts };
+const getSpecificProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const result = await getSpecificProductFromDB(productId);
+
+    res.status(201).json({
+      success: true,
+      message: 'Get a specific product from database successfully',
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+      error,
+    });
+  }
+};
+
+export { createProduct, getAllProducts, getSpecificProduct };
