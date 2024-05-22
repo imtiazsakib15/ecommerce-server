@@ -27,7 +27,7 @@ const createProduct = async (req: Request, res: Response) => {
 
     res.status(201).json({
       success: true,
-      message: 'Product saved to database successfully',
+      message: 'Product created successfully!',
       data: result,
     });
   } catch (error) {
@@ -47,7 +47,9 @@ const getAllProducts = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: 'Get all products from database successfully',
+      message: searchTerm
+        ? `Products matching search term ${searchTerm} fetched successfully!`
+        : 'Products fetched successfully!',
       data: result,
     });
   } catch (error) {
@@ -66,7 +68,7 @@ const getSpecificProduct = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: 'Get a specific product from database successfully',
+      message: 'Product fetched successfully!',
       data: result,
     });
   } catch (error) {
@@ -99,7 +101,7 @@ const UpdateAProduct = async (req: Request, res: Response) => {
     if (result) {
       return res.status(200).json({
         success: true,
-        message: 'Product updated successfully',
+        message: 'Product updated successfully!',
         data: result,
       });
     }
