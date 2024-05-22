@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import {
   createProductIntoDB,
+  deleteAProductFromDB,
   getAllProductsFromDB,
   getSpecificProductFromDB,
 } from './product.service';
@@ -15,7 +16,7 @@ const createProduct = async (req: Request, res: Response) => {
       productValidationSchema.safeParse(product);
 
     if (error)
-      res.status(500).json({
+      return res.status(500).json({
         success: false,
         message: 'Something went wrong',
         error,
@@ -41,7 +42,7 @@ const getAllProducts = async (req: Request, res: Response) => {
   try {
     const result = await getAllProductsFromDB();
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       message: 'Get all products from database successfully',
       data: result,
@@ -60,7 +61,7 @@ const getSpecificProduct = async (req: Request, res: Response) => {
     const { productId } = req.params;
     const result = await getSpecificProductFromDB(productId);
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       message: 'Get a specific product from database successfully',
       data: result,
@@ -74,4 +75,29 @@ const getSpecificProduct = async (req: Request, res: Response) => {
   }
 };
 
-export { createProduct, getAllProducts, getSpecificProduct };
+const deleteAProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const result = await deleteAProductFromDB(productId);
+
+    if (result)
+      return res.status(200).json({
+        success: true,
+        message: 'Product deleted successfully!',
+        data: null,
+      });
+    res.status(404).json({
+      success: false,
+      message: 'Product not found',
+      data: null,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+      error,
+    });
+  }
+};
+
+export { createProduct, getAllProducts, getSpecificProduct, deleteAProduct };

@@ -16,4 +16,14 @@ const getSpecificProductFromDB = async (productId: string) => {
   return result;
 };
 
-export { createProductIntoDB, getAllProductsFromDB, getSpecificProductFromDB };
+const deleteAProductFromDB = async (productId: string) => {
+  const result = await Product.findByIdAndDelete({ _id: productId });
+  return result;
+};
+
+export {
+  createProductIntoDB,
+  getAllProductsFromDB,
+  getSpecificProductFromDB,
+  deleteAProductFromDB,
+};
