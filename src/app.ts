@@ -9,7 +9,10 @@ app.get('/health', (req: Request, res: Response) => {
   res.send({ success: true, message: 'Server is working perfectly!' });
 });
 app.get('/*', (req: Request, res: Response) => {
-  res.send({ success: false, message: 'Route not found!' });
+  res.send({
+    success: false,
+    message: 'Route not found',
+  });
 });
 
 export default app;
