@@ -6,8 +6,11 @@ const createOrderIntoDB = async (order: IOrder) => {
   return result;
 };
 
-const getAllOrdersFromDB = async () => {
-  const result = await Order.find();
+const getAllOrdersFromDB = async (email: string | undefined) => {
+  let result: Array<IOrder>;
+  if (!email) result = await Order.find();
+  else result = await Order.find({ email });
+
   return result;
 };
 
