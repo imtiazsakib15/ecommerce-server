@@ -1,10 +1,23 @@
 import { Request, Response } from 'express';
 import { createProductIntoDB } from './product.service';
+import productValidationSchema from './product.validation';
+import { IProduct } from './product.interface';
 
 const createProduct = async (req: Request, res: Response) => {
   try {
     const product = req.body;
-    const result = await createProductIntoDB(product);
+    // product data validation using zod
+    const { data: productData, error } =
+      productValidationSchema.safeParse(product);
+
+    if (error)
+      res.status(500).json({
+        success: false,
+        message: 'Something went wrong',
+        error,
+      });
+
+    const result = await createProductIntoDB(productData as IProduct);
 
     res.status(201).json({
       success: true,
@@ -12,9 +25,9 @@ const createProduct = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error) {
-    res.status(500).send({
+    res.status(500).json({
       success: false,
-      message: 'Internal Server Error',
+      message: 'Something went wrong',
       error,
     });
   }

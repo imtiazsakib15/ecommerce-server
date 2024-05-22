@@ -9,7 +9,7 @@ app.use(express.json());
 // application routes
 app.use('/api/products', productRoutes);
 
-app.get('/health', (req: Request, res: Response) => {
+app.get('/', (req: Request, res: Response) => {
   res.send({ success: true, message: 'Server is working perfectly!' });
 });
 app.get('/*', (req: Request, res: Response) => {
