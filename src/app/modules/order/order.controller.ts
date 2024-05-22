@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createOrderIntoDB } from './order.service';
+import { createOrderIntoDB, getAllOrdersFromDB } from './order.service';
 import { IOrder } from './order.interface';
 import {
   UpdateAProductIntoDB,
@@ -31,7 +31,7 @@ const createOrder = async (req: Request, res: Response) => {
 
     await UpdateAProductIntoDB(order.productId, product);
 
-    res.status(200).json({
+    res.status(201).json({
       success: true,
       message: 'Order created successfully!',
       data: order,
@@ -45,4 +45,21 @@ const createOrder = async (req: Request, res: Response) => {
   }
 };
 
-export { createOrder };
+const getAllOrders = async (req: Request, res: Response) => {
+  try {
+    const result = await getAllOrdersFromDB();
+    res.status(200).json({
+      success: true,
+      message: 'Orders fetched successfully!',
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Something went wrong',
+      error,
+    });
+  }
+};
+
+export { createOrder, getAllOrders };

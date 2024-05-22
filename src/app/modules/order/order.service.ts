@@ -6,4 +6,9 @@ const createOrderIntoDB = async (order: IOrder) => {
   return result;
 };
 
-export { createOrderIntoDB };
+const getAllOrdersFromDB = async () => {
+  const result = await Order.find();
+  return result;
+};
+
+export { createOrderIntoDB, getAllOrdersFromDB };
