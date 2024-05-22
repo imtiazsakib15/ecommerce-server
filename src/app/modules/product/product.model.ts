@@ -5,11 +5,11 @@ const variantSchema = new Schema<IVariant>(
   {
     type: {
       type: String,
-      require: true,
+      required: true,
     },
     value: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   {
@@ -21,11 +21,11 @@ const inventorySchema = new Schema<IInventory>(
   {
     quantity: {
       type: Number,
-      require: true,
+      required: true,
     },
     inStock: {
       type: Boolean,
-      require: true,
+      required: true,
     },
   },
   {
@@ -36,25 +36,31 @@ const inventorySchema = new Schema<IInventory>(
 const productSchema = new Schema<IProduct>({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   description: {
     type: String,
-    require: true,
+    required: true,
   },
   price: {
     type: Number,
-    require: true,
+    required: true,
   },
   category: {
     type: String,
-    require: true,
+    required: true,
   },
-  tags: [String],
-  variants: [variantSchema],
+  tags: {
+    type: [String],
+    required: true,
+  },
+  variants: {
+    type: [variantSchema],
+    required: true,
+  },
   inventory: {
     type: inventorySchema,
-    require: true,
+    required: true,
   },
 });
 

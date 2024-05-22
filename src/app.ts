@@ -1,9 +1,13 @@
 import express, { Application, Request, Response } from 'express';
+import { productRoutes } from './app/modules/product/product.route';
 
 const app: Application = express();
 
 // parsers
 app.use(express.json());
+
+// application routes
+app.use('/api/products', productRoutes);
 
 app.get('/health', (req: Request, res: Response) => {
   res.send({ success: true, message: 'Server is working perfectly!' });
